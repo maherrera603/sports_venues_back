@@ -1,4 +1,5 @@
 import { CustomError } from "@/domain/errors";
+import { IResponse } from "@/domain/interfaces/response.interface";
 import { NextFunction, Request, Response } from "express";
 
 /**
@@ -15,7 +16,7 @@ export class ErrorMiddleware {
      * @param { NextFunction } next 
      * @returns Respuesta JSON con el codigo, estado y mensaje del error
      */
-    public static handle( error: Error, req: Request, res: Response, next: NextFunction){
+    public static handle( error: Error, req: Request, res: Response, next: NextFunction):Response<IResponse> {
         if( !(error instanceof CustomError) ) {
             return res.status(500).json({
                 code: 500,
