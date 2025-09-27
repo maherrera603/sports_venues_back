@@ -1,5 +1,6 @@
 import { Validator } from "@/application/validations";
 import { IUser } from "@/data/models";
+import { Role } from "@/domain/enum";
 
 interface IFields {
     name: string;
@@ -7,6 +8,7 @@ interface IFields {
     phone: string;
     email: string;
     password: string;
+    role: Role
 }
 
 
@@ -14,7 +16,7 @@ export class AuthRegisterDTO {
 
     public static validate_fields( fields: IFields): [ string | undefined, IUser? ] {
 
-        const { name, lastname, phone, email, password } = fields;
+        const { name, lastname, phone, email, password, role = Role.USER_ROLE } = fields;
 
         if( Validator.less_than( name, 3) ) return [ "el campo nombre debe contener mas de 3 caracteres" ];
 
@@ -38,7 +40,7 @@ export class AuthRegisterDTO {
 
         if( Validator.greater_than( password, 12) ) return [ "la contaseña debe contener menos de 12 caracteres" ];
 
-        const user = fields as IUser;
+        const user = {...fields, role} as IUser;
 
         return [ undefined,  user ];
     }

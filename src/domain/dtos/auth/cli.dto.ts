@@ -1,5 +1,6 @@
 import { Validator } from "@/application/validations";
 import { IUser } from "@/data/models";
+import { Role } from "@/domain/enum";
 
 interface IFields {
     email: string;
@@ -33,7 +34,7 @@ export class AuthCLIDTO {
 
         if( Validator.greater_than( password, 12 )) return [ "la contraseña debe contener menos de 12 caracteres" ];
 
-        return [ undefined, { name: "admin", lastname: "admin", phone: "+57", email, password } as IUser]
+        return [ undefined, { name: "admin", lastname: "admin", phone: "+57", email, password, role: Role.ADMIN_ROLE } as IUser]
 
     }
 }

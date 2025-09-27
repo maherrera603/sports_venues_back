@@ -1,3 +1,6 @@
+import { Role } from "@/domain/enum/";
+
+
 /**
  * Interfaz que representa la entidad de un Usuario en el sistema.
  *
@@ -47,4 +50,15 @@ export interface IUser {
      * Puede representarse como string (ej. "true"/"false") o enumeración según implementación.
      */
     accountActive?: boolean;
+
+    /**
+     * Rol asignado al usuario dentro del sistema.
+     *
+     * Puede definir el nivel de acceso, permisos o responsabilidades.
+     * 
+     * Ejemplos comunes:
+     * - "admin": acceso total al sistema.
+     * - "user": acceso limitado a sus propios recursos.
+     */
+    role?: Role
 }
