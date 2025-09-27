@@ -20,8 +20,8 @@ export class UserEntity {
      *          (`id`, `name`, `lastname`, `phone`, `email`).
      */
     public static from_json( data: {[key: string]: any }): IUser{
-        const { id, name, lastname, phone, email } = data;
-        return { id, name, lastname, phone, email } as IUser;
+        const { id, name, lastname, phone, email, role } = data;
+        return { id, name, lastname, phone, email, role } as IUser;
     }
 
     /**

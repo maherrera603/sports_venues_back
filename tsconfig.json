@@ -11,7 +11,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "esnext",
-    "types": [],
+    // "types": [],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -38,6 +38,8 @@
         "@/*": [ "./src/*"]
     },
     "esModuleInterop": true,
+    "typeRoots": [ "src/types", "node_modules/@types"],
+    "forceConsistentCasingInFileNames": true,
 
     // Recommended Options
     "strict": true,
@@ -47,5 +49,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-  }
+  },
+  "include": ["src"]
 }
