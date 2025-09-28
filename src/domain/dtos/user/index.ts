@@ -1,0 +1,1 @@
+export * from "@/domain/dtos/user/update.dto";

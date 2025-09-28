@@ -75,6 +75,16 @@ export class UserRepositoryImp implements UserRepository{
     }
 
     /**
+     * Elimina un usuario por su ID.
+     * 
+     * @param id - Identificador único del usuario.
+     * @returns Promesa que resuelve a `true` si la operación fue exitosa.
+     */
+    deleteUser(id: string | number): Promise<boolean> {
+        return this.userDatasource.deleteUser( id );
+    }
+
+    /**
      * Activa la cuenta de un usuario existente en la fuente de datos
      * @returns una promesa que resuelve en la entidad 'IUser' actualizada
      */

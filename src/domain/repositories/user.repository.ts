@@ -52,6 +52,15 @@ export interface UserRepository {
     updateUser( user: IUser): Promise<IUser>;
 
     /**
+     * Elimina un usuario existente en el sistema a partir de su identificador único.
+     *
+     * @param id Identificador único del usuario (string o number) que se desea eliminar.
+     * @returns Una promesa que resuelve a `true` si la eliminación fue exitosa, 
+     *          o `false` si el usuario no fue encontrado.
+     */
+    deleteUser( id: string | number): Promise<boolean>;
+
+    /**
      * Activa la cuenta de un usuario existente en la fuente de datos
      * @returns una promesa que resuelve en la entidad 'IUser' actualizada
      */

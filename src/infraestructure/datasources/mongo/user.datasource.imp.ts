@@ -28,7 +28,6 @@ export class UserDatasourceImp implements UserDatasource{
             const user = await UserModel.findOne({ email });
             return user ? UserEntity.from_json( user ): null;
         } catch (error) {
-            console.log( error )
             throw CustomError.notFound("datos del usuario no encontrados")
         }
     }
@@ -93,6 +92,28 @@ export class UserDatasourceImp implements UserDatasource{
             return UserEntity.from_json( updateUser! );
         } catch (error) {
             throw CustomError.internalServer("error: no se ha logrado actualizar los datos")
+        }
+    }
+
+    /**
+     * Elimina un usuario existente en la base de datos a partir de su identificador único.
+     *
+     * Pasos:
+     * 1. Intenta buscar y eliminar el usuario usando `UserModel.findByIdAndDelete`.
+     * 2. Si la operación es exitosa, retorna `true`.
+     * 3. Si ocurre algún error durante el proceso, lanza un `CustomError.internalServer`.
+     *
+     * @param id Identificador único del usuario (string o number) que se desea eliminar.
+     * @returns Una promesa que resuelve a `true` si la eliminación fue exitosa.
+     *
+     * @throws {CustomError.internalServer} Si ocurre un error en la operación de eliminación.
+     */
+    async deleteUser( id: string | number): Promise<boolean> {
+        try{
+            await UserModel.findByIdAndDelete({ _id: id });
+            return true;
+        }catch( error ){
+            throw CustomError.internalServer( "error: no se ha logrado eliminar los datos" );
         }
     }
 

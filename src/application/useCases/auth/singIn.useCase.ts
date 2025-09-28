@@ -39,7 +39,6 @@ export class SignInUseCase {
      * ```ts
      * const useCase = new SingInUseCase(userRepo);
      * const response = await useCase.singIn({ email: "test@test.com", password: "1234" });
-     * console.log(response.data.token);
      * ```
      */
     public async execute( user: IUser): Promise<IResponse<{token: string, user: IUser}>>{

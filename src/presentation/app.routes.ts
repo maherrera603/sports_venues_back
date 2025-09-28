@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { AuthRoutes } from "@/presentation/auth";
+import { UserRoutes } from "@/presentation/user";
 
 
 /**
@@ -17,6 +18,7 @@ export class AppRoutes{
         // Todo: implementar rutas de los modulos
         const routes = Router();
         routes.use( `${endpoint}/auth`, AuthRoutes.routes );
+        routes.use( `${endpoint}/user`, UserRoutes.routes );
 
         return routes;
     }
