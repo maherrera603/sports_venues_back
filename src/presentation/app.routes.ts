@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { AuthRoutes } from "@/presentation/auth";
 import { UserRoutes } from "@/presentation/user";
+import { SportVenueRoutes } from "@/presentation/sport-venue";
 
 
 /**
@@ -19,7 +20,7 @@ export class AppRoutes{
         const routes = Router();
         routes.use( `${endpoint}/auth`, AuthRoutes.routes );
         routes.use( `${endpoint}/user`, UserRoutes.routes );
-
+        routes.use( `${endpoint}/sport-venue`, SportVenueRoutes.routes );
         return routes;
     }
 

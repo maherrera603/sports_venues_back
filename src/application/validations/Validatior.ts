@@ -70,4 +70,26 @@ export class Validator {
     public static less_than( field: string, length: number): boolean{
         return field.trim().length < length;
     }
+
+    /**
+     * Expresión regular para validar direcciones urbanas.
+     *
+     * Soporta formatos comunes en Colombia como:
+     * - "calle 5 # 12 - 23"
+     * - "cra 10 No. 45 - 60"
+     * - "avenida 30 # 20 - 15 torre B"
+     * - "transversal 8 # 15 - 45 apto 302"
+     *
+     * La expresión valida:
+     * - Tipos de vía: calle, carrera, cra, avenida, av, transversal, diagonal, diag.
+     * - Número principal con posible letra (ej: "10A").
+     * - Separador `#` o `No.`.
+     * - Número secundario seguido de un guion y otro número.
+     * - Información opcional adicional (ej: apartamento, torre, piso).
+     *
+     * Es insensible a mayúsculas/minúsculas (`i`).
+     */
+    public static get address(): RegExp{
+        return /^(calle|cra|carrera|av|avenida|transversal|diag|diagonal)\s?\d+([a-zA-Z]?)\s?(#|No\.?)\s?\d+\s?-\s?\d+(\s?[a-zA-Z0-9\s]*)?$/i
+    }
 }
