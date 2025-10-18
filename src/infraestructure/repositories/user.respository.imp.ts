@@ -54,6 +54,11 @@ export class UserRepositoryImp implements UserRepository{
         return this.userDatasource.findUserById( id );
     }
 
+
+    findByRole(role: string): Promise<IUser | null> {
+        return this.userDatasource.findByRole( role);
+    }
+
     /**
      * Crea un nuevo usuario en la fuente de datos.
      *

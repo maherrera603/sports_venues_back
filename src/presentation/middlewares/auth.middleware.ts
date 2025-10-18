@@ -4,8 +4,32 @@ import { CustomError } from "@/domain/errors";
 import { UserDatasourceImp } from "@/infraestructure/datasources/mongo";
 import { JWTAdapter } from "@/plugins";
 
+/**
+ * @class AuthMiddleware
+ * @description
+ * Middleware de autenticación y autorización basado en JWT.
+ * 
+ * Este middleware valida el token JWT incluido en el encabezado `Authorization`
+ * y verifica que el usuario autenticado tenga los permisos requeridos
+ * según su **rol** dentro del sistema.
+ * 
+ * Se utiliza en rutas que requieren autenticación o restricción por roles.
+ */
 export class AuthMiddleware {
 
+    /**
+     * Genera un middleware de validación de token JWT y control de acceso por roles.
+     * 
+     * @param {Role[]} roles - Lista de roles permitidos para acceder al recurso (por ejemplo: `[Role.ADMIN_ROLE]`).
+     * @returns {Function} Middleware de Express que valida autenticación y permisos del usuario.
+     * 
+     * @throws {CustomError} Si:
+     * - No se envía el header `Authorization`.
+     * - El formato del token es inválido.
+     * - El token no es válido o ha expirado.
+     * - El usuario no existe.
+     * - El usuario no posee los roles necesarios.
+     */
     public static validation( roles: Role[]){
         return async ( req: Request, res: Response, next: NextFunction) => {
             const authorization = req.header("Authorization");

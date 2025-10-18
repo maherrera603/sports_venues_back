@@ -40,7 +40,7 @@ export class UserEntity {
      *          (`id`, `name`, `lastname`, `phone`, `email`, `password`, `accountActive`).
      */
     public static from_json_with_password( data: {[key: string]: any }): IUser{
-        const { id, name, lastname, phone, email, password, accountActive } = data;
-        return { id, name, lastname, phone, email, password, accountActive } as IUser;
+        const { id, name, lastname, phone, email, password, role, accountActive } = data;
+        return { id, name, lastname, phone, email, password, role, accountActive } as IUser;
     }
 }

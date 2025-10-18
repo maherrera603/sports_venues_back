@@ -1,7 +1,28 @@
 import { IUser } from "@/data/models";
 
+
+/**
+ * @class EmailTemplate
+ * @description
+ * Clase responsable de generar plantillas HTML reutilizables para el envío de correos electrónicos.
+ * 
+ * Centraliza los formatos visuales y contenido dinámico de los correos enviados por el sistema.
+ * 
+ * Esta clase pertenece a la **capa de aplicación**, ya que apoya casos de uso relacionados con la comunicación
+ * con el usuario (por ejemplo: activación de cuenta, restablecimiento de contraseña, notificaciones, etc.).
+ */
 export class EmailTemplate {
 
+    /**
+     * Genera la plantilla HTML del correo de activación de cuenta.
+     * 
+     * Este correo se envía al usuario recién registrado para verificar su dirección de correo
+     * y activar su cuenta mediante un enlace único.
+     * 
+     * @param {string} activationLink - Enlace único de activación generado por el sistema.
+     * @param {IUser} user - Objeto del usuario al que se le enviará el correo.
+     * @returns {string} Plantilla HTML completa lista para ser enviada por un servicio SMTP o proveedor externo.
+     */
     public static activeAccountTemplate( activationLink: string, user: IUser){
         return `
             <!DOCTYPE html>

@@ -92,4 +92,29 @@ export class Validator {
     public static get address(): RegExp{
         return /^(calle|cra|carrera|av|avenida|transversal|diag|diagonal)\s?\d+([a-zA-Z]?)\s?(#|No\.?)\s?\d+\s?-\s?\d+(\s?[a-zA-Z0-9\s]*)?$/i
     }
+
+
+    /**
+     * Expresión regular para validar fechas en formato `YYYY-MM-DD`.
+     * 
+     * - Acepta años entre 1900 y 2099.
+     * - Valida meses del `01` al `12`.
+     * - Valida días del `01` al `31`.
+     * - No valida la lógica de días por mes ni años bisiestos (para validación básica).
+     */
+    public static get date(): RegExp {
+        return /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+    }
+
+    /**
+     * Expresión regular para validar horas en formato de 12 horas `hh:mm AM/PM`.
+     * 
+     * - Acepta horas entre `01:00 AM` y `12:59 PM`.
+     * - Permite minúsculas o mayúsculas en AM/PM.
+     * - Permite un cero opcional al inicio de la hora (`9:30 AM` o `09:30 AM`).
+     */
+    public static get hour(): RegExp {
+        return /^(0?[1-9]|1[0-2]):[0-5]\d\s?(AM|PM|am|pm)$/
+
+    }
 }

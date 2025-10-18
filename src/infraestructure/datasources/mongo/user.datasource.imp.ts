@@ -64,6 +64,15 @@ export class UserDatasourceImp implements UserDatasource{
         }
     }
 
+    async findByRole(role: string): Promise<IUser | null> {
+        try {
+            const user = await UserModel.findOne({ role });
+            return user ? UserEntity.from_json(user) : null;
+        } catch (error) {
+            throw CustomError.internalServer(`${error}`);
+        }
+    }
+
     /**
      * Crea un nuevo usuario en la base de datos.
      * @param user - Objeto de tipo `IUser` con los datos del usuario a registrar.

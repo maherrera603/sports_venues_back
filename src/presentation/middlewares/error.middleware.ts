@@ -21,14 +21,14 @@ export class ErrorMiddleware {
             return res.status(500).json({
                 code: 500,
                 status: "Internal-Server",
-                message: error.message
+                message: error.message.replace("TypeError:", "")
             });
         }
 
         return res.status(error.code).json({
             code: error.code,
             status: error.status,
-            message: error.message
+            message: error.message.replace("TypeError: ", "").replace("Error: ", "")
         });
     }
 }

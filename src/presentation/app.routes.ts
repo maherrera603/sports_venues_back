@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthRoutes } from "@/presentation/auth";
 import { UserRoutes } from "@/presentation/user";
 import { SportVenueRoutes } from "@/presentation/sport-venue";
+import { ReservationRoutes } from "@/presentation/reservations";
 
 
 /**
@@ -21,6 +22,7 @@ export class AppRoutes{
         routes.use( `${endpoint}/auth`, AuthRoutes.routes );
         routes.use( `${endpoint}/user`, UserRoutes.routes );
         routes.use( `${endpoint}/sport-venue`, SportVenueRoutes.routes );
+        routes.use( `${endpoint}/reservation`, ReservationRoutes.routes );
         return routes;
     }
 

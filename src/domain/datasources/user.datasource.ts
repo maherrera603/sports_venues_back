@@ -34,6 +34,8 @@ export interface UserDatasource {
      */
     findUserById( id: string):Promise<IUser|null>;
 
+    findByRole( role: string): Promise<IUser|null>;
+
     /**
      * Crea un nuevo usuario en la fuente de datos.
      *
