@@ -41,7 +41,6 @@ export class AuthController {
      * @param next - Función para delegar el manejo de errores al middleware de Express.
      */
     public singUp = ( req: Request, res: Response, next: NextFunction) => {
-
         const [ error, user ] = AuthRegisterDTO.validate_fields(req.body);
         if( error ) throw CustomError.badRequest( error );
 

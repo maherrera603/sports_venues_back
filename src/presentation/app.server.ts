@@ -1,5 +1,6 @@
 import express, { Router }  from "express";
 import { ErrorMiddleware } from "@/presentation/middlewares";
+import { CorsAdapter } from "@/plugins";
 
 /**
  * Opciones para configurar el servidor de la aplicacion
@@ -34,6 +35,7 @@ export class AppServer {
      * incluyendo parseo JSON, parseo URL-encoded, rutas y manejo de errores.
      */
     private loadMiddlewares(){
+        this.app.use( CorsAdapter.config );
         this.app.use( express.json() );
         this.app.use( express.urlencoded({ extended: true }));
         this.app.use( this.routes );
@@ -46,7 +48,6 @@ export class AppServer {
      */
     public start(){
         this.loadMiddlewares();
-
         this.serverListener = this.app.listen( this.port, () => console.log(`Server running on port ${this.port}`));
     }
 }
