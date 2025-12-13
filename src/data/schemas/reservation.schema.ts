@@ -15,6 +15,7 @@ const reservationSchema = new Schema({
      */
     date_reservation: {
         type: Date,
+        get: (v: Date) => v.toISOString().split('T')[0],
         required: [ true, "missing date_reservation is required"]
     },
     /**
@@ -45,7 +46,7 @@ const reservationSchema = new Schema({
     hour_initial: {
         type: String,
         required: [ true, "missing hour initial is required"],
-        unique: true,
+        // unique: true,
     },
     /**
      * Hora de finalización de la reserva (formato 24h, ejemplo: "10:00").
@@ -53,7 +54,7 @@ const reservationSchema = new Schema({
     hour_finish: {
         type: String,
         required: [ true, "missing hour finish is required"],
-        unique: true
+        // unique: true
     },
     /**
      * Referencia al escenario o cancha deportiva reservada.
@@ -87,7 +88,9 @@ const reservationSchema = new Schema({
         required: [ true, "missing user is required"]
     }
 },{
-    timestamps: true
+    timestamps: true,
+    toJSON: { getters: true}, toObject: { getters: true}
+    
 }); 
 
 
@@ -116,8 +119,7 @@ reservationSchema.pre("save", async function (next) {
         return startA! < endB! && startB! < endA!;
     });
 
-    if (overlap) throw CustomError.internalServer("El espacio deportivo ya tiene una reserva en este horario.");
-    
+    if (overlap) throw CustomError.badRequest("El espacio deportivo ya tiene una reserva en este horario.");
 
     next();
 });

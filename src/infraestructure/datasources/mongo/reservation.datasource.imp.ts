@@ -4,6 +4,7 @@ import { IReservationDatasource } from "@/domain/datasources";
 import { ReservationEntity } from "@/domain/entities";
 
 import { CustomError } from "@/domain/errors";
+import { Types } from "mongoose";
 
 /**
  * @class ReservationDatasourceImp
@@ -45,7 +46,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async findByUser(user: string | number): Promise<IReservation[]> {
         try {
-            const reservations = await ReservationModel.find({ to_user: user }).populate("sports_venue");
+            const reservations = await ReservationModel.find({ to_user: user }).populate("to_user sports_venue");
             return reservations.map( ReservationEntity.from_json );
         } catch (error) {
             throw CustomError.internalServer( `${error}` );
@@ -62,7 +63,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async findById(id: string | number): Promise<IReservation|null> {
         try {
-            const reservation = await ReservationModel.findById( id );
+            const reservation = await ReservationModel.findById( id ).populate("to_user sports_venue");
             return reservation ? ReservationEntity.from_json( reservation! ) : null;
         } catch (error) {
             throw CustomError.internalServer( `${error}`);
@@ -80,7 +81,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async findByIdByUser(id: string | number, id_user: string | number): Promise<IReservation|null> {
         try {
-            const reservation = await ReservationModel.findOne({ _id: id, to_user: id_user});
+            const reservation = await ReservationModel.findOne({ _id: id, to_user: id_user}).populate("to_user sports_venue");
             return reservation ? ReservationEntity.from_json( reservation! ) : null;
         } catch (error) {
             throw CustomError.internalServer( `${error}`);
@@ -97,7 +98,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async findBySportVenue(id: string | number): Promise<IReservation[]> {
         try {
-            const reservations = await ReservationModel.find({ sports_venue: id });
+            const reservations = await ReservationModel.find({ sports_venue: id }).populate("to_user sports_venue");
             return reservations.map( ReservationEntity.from_json );
         } catch (error) {
             throw CustomError.internalServer(`${error}`);
@@ -115,7 +116,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async findBySportVenueAndUser(id: string | number, user: string | number): Promise<IReservation[]> {
         try {
-            const reservations = await ReservationModel.find({ sports_venue: id, to_user: user });
+            const reservations = await ReservationModel.find({ sports_venue: id, to_user: user }).populate("to_user sports_venue");
             return reservations.map( ReservationEntity.from_json );
         } catch (error) {
             throw CustomError.internalServer(`${error}`);
@@ -133,7 +134,9 @@ export class ReservationDatasourceImp implements IReservationDatasource {
     async create(resevation: IReservation): Promise<IReservation> {
         try {
             const data = await ReservationModel.create( resevation );
-            return ReservationEntity.from_json( data );
+            const find = ReservationEntity.from_json( data );
+            const reservation = await this.findById(find.id!);
+            return reservation!; 
         } catch (error) {
             throw CustomError.internalServer(`${error}`);
         }
@@ -151,7 +154,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async update(id: string|number, reservation: IReservation): Promise<IReservation> {
         try {
-            const update = await ReservationModel.findByIdAndUpdate(id, { ...reservation }, { new: true });
+            const update = await ReservationModel.findByIdAndUpdate(id, { ...reservation }, { new: true }).populate("to_user sports_venue");
             return ReservationEntity.from_json( update! );
         } catch (error) {
             throw CustomError.internalServer(`${error}`);
@@ -169,7 +172,7 @@ export class ReservationDatasourceImp implements IReservationDatasource {
      */
     async deleteSoft(id: string | number): Promise<boolean> {
         try{
-            await ReservationModel.findByIdAndUpdate(id, { status: "cancelled", confirm_reservation: false})
+            await ReservationModel.findByIdAndUpdate(id, { status: "cancelled", confirm_reservation: false}).populate("sports_venue to_user")
             return true;
         }catch( error ){
             throw CustomError.internalServer(`${error}`);
