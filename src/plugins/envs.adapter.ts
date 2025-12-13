@@ -98,4 +98,8 @@ export class EnvsAdapter {
         return get("MAILER_SECRET_KEY").required().asString();
     }
 
+    public static get CORS_ORIGIN(): string{
+        return get("CORS_ORIGIN").required().asString();
+    }
+
 }
