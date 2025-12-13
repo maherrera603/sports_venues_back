@@ -38,7 +38,7 @@ export class YargAdapter {
      *
      * @throws Error si no se proporcionan los argumentos requeridos.
      */
-    public static get arguments(): IArgv {
+    public static get argv(): IArgv {
         const yarg = yargs( hideBin( process.argv ))
             .option("e", {
                 alias: "email",

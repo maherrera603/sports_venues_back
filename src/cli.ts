@@ -42,7 +42,7 @@ async function main(){
         // useCase
         const signUpUseCase = new SignUpUseCase( userRepository );
     
-        const [ error, admin ] = AuthCLIDTO.validate_fields( YargAdapter.arguments);
+        const [ error, admin ] = AuthCLIDTO.validate_fields( YargAdapter.argv);
         if( error )return console.log( error );
     
         const resp = await signUpUseCase.execute( admin! );
