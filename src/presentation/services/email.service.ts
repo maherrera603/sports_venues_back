@@ -86,7 +86,7 @@ export class EmailService {
 
             return true
         } catch (error) {
-            throw CustomError.internalServer("no se ha podido enviar el correo electronico");
+            throw CustomError.internalServer(`no se ha podido enviar el correo electronico -> ${ error }`);
         }
     }
 
