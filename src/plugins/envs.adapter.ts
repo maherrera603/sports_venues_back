@@ -102,4 +102,8 @@ export class EnvsAdapter {
         return get("CORS_ORIGIN").required().asString();
     }
 
+    public static get MAILER_PORT(): number{
+        return get("MAILER_PORT").required().asInt();
+    }
+
 }

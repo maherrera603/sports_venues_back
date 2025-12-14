@@ -35,7 +35,9 @@ export class EmailService {
      */
     constructor(){
         this.transporter = createTransport({
-            service: EnvsAdapter.MAILER_SERVICE,
+            host: EnvsAdapter.MAILER_SERVICE,
+            port: EnvsAdapter.MAILER_PORT,
+            secure: false,
             auth: {
                 user: EnvsAdapter.MAILER_EMAIL,
                 pass: EnvsAdapter.MAILER_SECRET_KEY
@@ -54,7 +56,7 @@ export class EmailService {
         const token = await JWTAdapter.generateToken({ id: user.id!, email: user.email! });
         if( !token) throw CustomError.conflict("Se ha generado un error al crear el token");
 
-        const link = `http://localhost:3000/${token}`;
+        const link = `${EnvsAdapter.CORS_ORIGIN}/activar-cuenta/${token}`;
         const body = EmailTemplate.activeAccountTemplate( link, user );
         const options = {
             to: user.email!,
@@ -84,7 +86,7 @@ export class EmailService {
 
             return true
         } catch (error) {
-            throw CustomError.internalServer("no se ha podigo enviar el correo electronico");
+            throw CustomError.internalServer("no se ha podido enviar el correo electronico");
         }
     }
 

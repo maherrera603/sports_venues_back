@@ -91,8 +91,8 @@ export class AuthController {
      *  - Errores propagados al middleware de manejo de errores.
      */
     public accountActive = ( req: Request, res: Response, next: NextFunction ) => {
-        const [bearer, token] = req.header("Authorization")?.split(" ") || "";
-        
+        const [bearer, token] = req.header("Authorization")?.split(" ") || ""; 
+
         if( !bearer?.includes("Bearer")) throw CustomError.forbidden("no tienes permisos para activar la cuenta");
         this.activeAccount.execute( token as string)
             .then( resp => res.status(resp.code).json( resp ))

@@ -84,7 +84,7 @@ export class UserDatasourceImp implements UserDatasource{
             const newUser = await UserModel.create({ ...user });
             return UserEntity.from_json( newUser );
         } catch (error) {
-            throw CustomError.internalServer("error: no se ha logrado guardar los datos ");
+            throw CustomError.internalServer(`error: no se ha logrado guardar los datos`);
         }
     }
 
