@@ -77,7 +77,7 @@ export class EmailService {
     private async sendEmail( options: SendEmailOptions): Promise<boolean>{
         try {
             const { to, subject, htmlBody, attachments } = options;
-            await this.transporter.sendMail({
+            this.transporter.sendMail({
                 to,
                 subject,
                 html: htmlBody,
